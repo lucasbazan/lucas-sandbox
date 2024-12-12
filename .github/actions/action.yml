@@ -15,6 +15,7 @@ runs:
   steps:
     - name: Run Command
       id: internal-run-command-step
+      shell: bash
       run: |
         output=$(${{ inputs.command }})
         
