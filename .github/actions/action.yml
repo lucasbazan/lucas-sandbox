@@ -1,0 +1,22 @@
+name: Internal Action
+
+inputs:
+  command:
+    required: true
+    description: 'Insert the command'
+    
+# Declaration of outputs
+outputs:
+  internal_command_output:
+    value: ${{ steps.internal-run-command-step.outputs.internal_run_command_output }}
+    
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Command
+      id: internal-run-command-step
+      run: |
+        output=$(${{ inputs.command }})
+        
+        # Save the output in GITHUB_OUTPUT environment file
+        echo "internal_run_command_output=$output" >> $GITHUB_OUTPUT
