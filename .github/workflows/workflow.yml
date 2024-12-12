@@ -1,9 +1,11 @@
 name: Workflow
 on:
   workflow_dispatch:
-    command:
-      required: true
-      description: 'Insert the command'
+    inputs:
+      command:
+        required: true
+        description: 'Insert the command'
+        type: string
 jobs:
   get-output:
     runs-on: ubuntu-latest
