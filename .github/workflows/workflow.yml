@@ -1,0 +1,31 @@
+name: Workflow
+on:
+  workflow_dispatch:
+    command:
+      required: true
+      description: 'Insert the command'
+jobs:
+  get-output:
+    runs-on: ubuntu-latest
+    name: Get Outputs
+    # Declaration of outputs
+    outputs:
+      command_output: ${{ steps.run-command-step.outputs.internal_command_output }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      # Define the path of your internal action
+      - uses: ./.github/actions
+        id: run-command-step
+        with:
+          command: ${{ inputs.command }}
+  show-output:
+    runs-on: ubuntu-latest
+    name: Show Output
+    needs: get-output
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Show output
+        run: echo "${{ needs.get-output.outputs.command_output }}"
